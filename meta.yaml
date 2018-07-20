@@ -1,0 +1,84 @@
+{% set posix = 'm2-' if win else '' %}
+{% set native = 'm2w64-' if win else '' %}
+
+package:
+  name: r-epic
+  # Note that conda versions cannot contain -, so any -'s in the version have
+  # been replaced with _'s.
+  version: "1.1"
+
+source:
+  fn: epic_1.1.tar.gz
+  url:
+    - https://github.com/GfellerLab/EPIC/archive/v1.1.tar.gz
+  sha256: 95bea4a5bd1fb57a94055198475a2237b2181b2a499a97ec5055637c987d159f
+
+build:
+  # If this is a new build for the same version, increment the build
+  # number. If you do not include this key, it defaults to 0.
+  # number: 1
+
+  # This is required to make R link correctly on Linux.
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+# Suggests: testthat, knitr, rmarkdown, shiny
+requirements:
+  build:
+    - r-base =3.4.1
+    - r-roxygen2 =6.0.1
+    - posix               # [win]
+    - {{native}}toolchain # [win]
+      #    - gcc                 # [not win]
+
+  run:
+    - r-base >=3.2.0
+    - r-roxygen2 >=6.0.1
+
+test:
+  commands:
+    # You can put additional test commands to be run here.
+    - $R -e "library('EPIC')" # [not win]
+    - "\"%R%\" -e \"library('EPIC')\"" # [win]
+
+  # You can also put a file called run_test.py, run_test.sh, or run_test.bat
+  # in the recipe that will be run at test time.
+
+  # requires:
+    # Put any additional test requirements here.
+
+about:
+  home: https://github.com/GfellerLab/EPIC
+  license: file LICENSE
+  summary: Package implementing EPIC method to estimate the proportion of immune, stromal, endothelial and cancer or other cells from bulk gene expression data.  It is based on reference gene expression profiles for the main non-malignant cell types and it predicts the proportion of these cells and of the remaining "other cells" (that are mostly cancer cells) for which no reference profile is given.
+
+# The original CRAN metadata for this package was:
+
+# Package: EPIC
+# Type: Package
+# Title: Estimate the Proportion of Immune and Cancer cells
+# Version: 1.1.2
+# Authors@R: as.person(c(
+#   "Julien Racle <julien.racle@unil.ch> [aut, cre]",
+#     "David Gfeller <david.gfeller@unil.ch> [aut]"
+#       ))
+# Description: Package implementing EPIC method to estimate the proportion of
+#     immune, stromal, endothelial and cancer or other cells from bulk gene
+#         expression data.
+#             It is based on reference gene expression profiles for the main non-malignant
+#                 cell types and it predicts the proportion of these cells and of the
+#                     remaining "other cells" (that are mostly cancer cells) for which no
+#                         reference profile is given.
+# Depends:
+#       R (>= 3.2.0)
+# License: file LICENSE
+# LazyData: TRUE
+# RoxygenNote: 6.0.1
+# Suggests:
+#       testthat,
+#           knitr,
+#               rmarkdown
+# Imports:
+#       stats
+# VignetteBuilder: knitr
