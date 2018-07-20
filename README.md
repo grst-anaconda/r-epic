@@ -1,8 +1,6 @@
 # [r-epic](https://anaconda.org/grst/r-epic)
 ![travis ci](https://api.travis-ci.org/grst-anaconda/r-epic.svg?branch=master)
 
-Recipies for my anaconda packages.
-
 ## How to build
 Summary of the [conda tutorial](https://conda.io/docs/user-guide/tutorials/build-pkgs.html).
 
