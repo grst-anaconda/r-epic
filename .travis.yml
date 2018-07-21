@@ -41,6 +41,7 @@ script:
   # Test conda package
   - conda build .
   - conda install --use-local r-epic
+  - Rscript -e "library(EPIC)"
 
 sudo: false
 cache: packages
